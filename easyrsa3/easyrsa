@@ -705,7 +705,7 @@ key: $key_out
 # common signing backend
 sign_req() {
 	crt_type="$1"
-	opts=""
+	opts="-passin stdin"
 	req_in="$EASYRSA_PKI/reqs/$2.req"
 	crt_out="$EASYRSA_PKI/issued/$2.crt"
 
@@ -871,7 +871,8 @@ Error: didn't find a file base name as the first argument.
 Run easyrsa without commands for usage and command help."
 	crt_in="$EASYRSA_PKI/issued/$1.crt"
 
-	opts=""
+  # Add ability to use a script to fill in the CA password
+	opts="-batch -passin stdin"
 	if [ "$2" ]; then
 		opts="$opts -crl_reason $2"
 	fi
